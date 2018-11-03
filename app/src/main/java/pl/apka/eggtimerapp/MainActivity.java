@@ -1,24 +1,28 @@
 package pl.apka.eggtimerapp;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
-
     SeekBar seekBar;
+    boolean counterIsActive = false;
+    Button button;
 
     public void buttonClicked (View view) {
 
-        Log.i("info", "button pressed");
+        counterIsActive = true;
+        seekBar.setEnabled(false);
+        button.setText("STOP!");
 
-        new CountDownTimer(seekBar.getProgress()*1000, 1000){
+        new CountDownTimer(seekBar.getProgress()*1000+100, 1000){
 
             @Override
             public void onTick(long l) {
@@ -27,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Log.i("info", "Finish");
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.bell);
+                mediaPlayer.start();
+
             }
         }.start();
 
@@ -56,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar2);
 
         textView = findViewById(R.id.textView);
+
+        button = findViewById(R.id.goButton);
 
         seekBar.setMax(600);
 
