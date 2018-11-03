@@ -18,16 +18,20 @@ public class MainActivity extends AppCompatActivity {
 
     CountDownTimer countDownTimer;
 
+    public void resetTimer() {
+        textView.setText("0:30");
+        seekBar.setProgress(30);
+        seekBar.setEnabled(true);
+        countDownTimer.cancel();
+        button.setText("GO!");
+        counterIsActive = false;
+
+    }
+
     public void buttonClicked (View view) {
 
         if (counterIsActive) {
-            textView.setText("0:30");
-            seekBar.setProgress(30);
-            seekBar.setEnabled(true);
-            countDownTimer.cancel();
-            button.setText("GO!");
-            counterIsActive = false;
-
+           resetTimer();
         } else {
 
             counterIsActive = true;
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bell);
                     mediaPlayer.start();
+                    resetTimer();
 
                 }
             }.start();
